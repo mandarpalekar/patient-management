@@ -1,0 +1,19 @@
+### POST request to create a new patient
+POST http://localhost:8080/api/patients/create
+Content-Type: application/json
+
+{
+    "firstName": "Esther",
+    "lastName": "Kinloch",
+    "birthDate": "1995-06-18",
+    "email": "ekinloch@yahoo.com",
+    "address": {
+        "street": "123 Loch St",
+        "city": "Newtown",
+        "state": "NSW",
+        "zipCode": "2000",
+        "country": "Australia"
+  }
+}
+
+###
