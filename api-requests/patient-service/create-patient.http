@@ -3,13 +3,13 @@ POST http://localhost:8080/api/patients/create
 Content-Type: application/json
 
 {
-    "firstName": "Esther",
-    "lastName": "Kinloch",
-    "birthDate": "1995-06-18",
-    "email": "ekinloch@yahoo.com",
+    "firstName": "Michael",
+    "lastName": "Johnson",
+    "birthDate": "1965-10-02",
+    "email": "mike.johnson@email.com",
     "address": {
-        "street": "123 Loch St",
-        "city": "Newtown",
+        "street": "11 Banning St",
+        "city": "Seaside",
         "state": "NSW",
         "zipCode": "2000",
         "country": "Australia"

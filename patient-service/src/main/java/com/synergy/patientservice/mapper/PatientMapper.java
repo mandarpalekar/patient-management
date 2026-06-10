@@ -1,52 +1,26 @@
 package com.synergy.patientservice.mapper;
 
-import com.synergy.patientservice.dto.AddressDTO;
 import com.synergy.patientservice.dto.PatientRequestDTO;
 import com.synergy.patientservice.dto.PatientResponseDTO;
-import com.synergy.patientservice.model.Address;
 import com.synergy.patientservice.model.Patient;
+import org.mapstruct.*;
 
 import java.time.LocalDate;
 
-public class PatientMapper {
+@Mapper(componentModel = "spring")
+public interface PatientMapper {
 
-    public static Patient toPatient(PatientRequestDTO patientRequestDTO) {
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "registrationDate", expression = "java(java.time.LocalDate.now())")
+    @Mapping(target = "birthDate", expression = "java(java.time.LocalDate.parse(dto.getBirthDate()))")
+    Patient toPatient(PatientRequestDTO dto);
 
-        Address address = Address.builder()
-                .street(patientRequestDTO.getAddress().getStreet())
-                .city(patientRequestDTO.getAddress().getCity())
-                .state(patientRequestDTO.getAddress().getState())
-                .zipCode(patientRequestDTO.getAddress().getZipCode())
-                .country(patientRequestDTO.getAddress().getCountry())
-                .build();
+    @Mapping(target = "dateOfBirth", expression = "java(patient.getBirthDate().toString())")
+    @Mapping(target = "id", expression = "java(patient.getId().toString())")
+    PatientResponseDTO toPatientResponseDTO(Patient patient);
 
-        return Patient.builder()
-                .firstName(patientRequestDTO.getFirstName())
-                .lastName(patientRequestDTO.getLastName())
-                .email(patientRequestDTO.getEmail())
-                .birthDate(LocalDate.parse(patientRequestDTO.getBirthDate()))
-                .registrationDate(LocalDate.now())
-                .address(address)
-                .build();
-    }
-
-    public static PatientResponseDTO toPatientResponseDTO(Patient patient) {
-
-        AddressDTO addressDTO = AddressDTO.builder()
-                .street(patient.getAddress().getStreet())
-                .city(patient.getAddress().getCity())
-                .state(patient.getAddress().getState())
-                .zipCode(patient.getAddress().getZipCode())
-                .country(patient.getAddress().getCountry())
-                .build();
-
-        return PatientResponseDTO.builder()
-                .id(patient.getId().toString())
-                .firstName(patient.getFirstName())
-                .lastName(patient.getLastName())
-                .email(patient.getEmail())
-                .dateOfBirth(patient.getBirthDate().toString())
-                .address(addressDTO)
-                .build();
-    }
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "registrationDate", ignore = true)
+    @Mapping(target = "birthDate", expression = "java(java.time.LocalDate.parse(dto.getBirthDate()))")
+    void updatePatientFromDTO(PatientRequestDTO dto, @MappingTarget Patient patient);
 }

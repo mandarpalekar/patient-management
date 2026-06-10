@@ -1,0 +1,19 @@
+### PUT request to update a new patient
+PUT http://localhost:8080/api/patients/update/0e2d3290-39a1-4fae-9898-98acfe6ec332
+Content-Type: application/json
+
+{
+  "firstName": "Michael",
+  "lastName": "Johnston",
+  "birthDate": "1965-10-02",
+  "email": "mike.johnston@email.com",
+  "address": {
+    "street": "11 Banning St",
+    "city": "Seaside",
+    "state": "NSW",
+    "zipCode": "2000",
+    "country": "Australia"
+  }
+}
+
+###
